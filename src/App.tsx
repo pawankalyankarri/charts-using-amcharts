@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import BarChartCom from './components/BarChartCom'
-import Charts from './components/Charts'
+import BarChartCom from './mycomponents/BarChartCom'
+import Charts from './mycomponents/Charts'
 
 function App() {
 

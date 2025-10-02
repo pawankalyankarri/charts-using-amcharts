@@ -132,7 +132,8 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
         })
       );
       // legend.data.unshift(barChart.series.values);
-       legend.data.setAll(barChart.series.values)
+       //legend.data.setAll(barChart.series.values)
+       legend.data.setAll(series.dataItems)
 
       xAxis.data.setAll(graphdata);
       series.data.setAll(graphdata);
