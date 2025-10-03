@@ -5,14 +5,14 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import axios from "axios";
 import { barGraphApi } from "./apis";
 
-export interface BarChartData {
+export interface ChartData {
   comname: string;
   total_sum: number;
   netweight_sum: number;
 }
 
 const BarChartCom: React.FC = () => {
-  const [details, setDetails] = useState<BarChartData[]>([]);
+  const [details, setDetails] = useState<ChartData[]>([]);
 
   // Fetch API data
   useEffect(() => {

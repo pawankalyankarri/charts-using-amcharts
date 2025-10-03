@@ -1,9 +1,14 @@
-import type { BarChartData } from "./BarChartCom";
 import * as am5 from "@amcharts/amcharts5";
 import * as am5xy from "@amcharts/amcharts5/xy";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useLayoutEffect } from "react";
 import * as am5percent from "@amcharts/amcharts5/percent";
+
+export interface BarChartData {
+  comname: string;
+  total_sum: number;
+  netweight_tmt_sum: number;
+}
 
 interface ChildChartProps {
   graphdata: BarChartData[];
@@ -11,7 +16,7 @@ interface ChildChartProps {
 }
 
 const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
-  console.log(graphdata)
+  console.log(graphdata);
   useLayoutEffect(() => {
     if (graphdata.length === 0) return;
 
@@ -78,15 +83,15 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
           text: "Net Weight Sum",
           fontSize: 14,
           rotation: -90,
-          y:am5.p50,            
-          centerX: am5.p50,     // to place the y-axis label in the center
+          y: am5.p50,
+          centerX: am5.p50, // to place the y-axis label in the center
           paddingBottom: 0,
         })
       );
 
       let series = barChart.series.push(
         am5xy.ColumnSeries.new(root, {
-          name: "Netweight Sum",
+          name: "Net_tmt_Weight",
           xAxis,
           yAxis,
           valueYField: "netweight_tmt_sum",
@@ -119,6 +124,9 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
         })
       );
 
+      xAxis.data.setAll(graphdata);
+      series.data.setAll(graphdata);
+
       const legend = barChart.children.unshift(
         am5.Legend.new(root, {
           centerX: am5.percent(50),
@@ -126,27 +134,21 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
           // centerY: am5.p50,
           // y: am5.p100,
 
-          layout:root.horizontalLayout,
+          layout: root.horizontalLayout,
           paddingTop: 10,
-          visible:true
+          visible: true,
         })
       );
-      // legend.data.unshift(barChart.series.values);
-       //legend.data.setAll(barChart.series.values)
-       legend.data.setAll(series.dataItems)
-
-      xAxis.data.setAll(graphdata);
-      series.data.setAll(graphdata);
+      
+      legend.data.setAll(series.dataItems);
 
       series.appear(1000);
       barChart.appear(1000, 100);
-
-      
     } else if (chart === "pie") {
       //  Pie Chart
       let pieChart = root.container.children.push(
         am5percent.PieChart.new(root, {
-          endAngle: 270,
+          layout: root.verticalLayout,
         })
       );
 
@@ -154,11 +156,22 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
         am5percent.PieSeries.new(root, {
           valueField: "netweight_tmt_sum",
           categoryField: "comname",
-          endAngle: 270,
         })
       );
 
       pieSeries.data.setAll(graphdata);
+
+      let legend = pieChart.children.push(
+        am5.Legend.new(root, {
+          centerX: am5.percent(50),
+          x: am5.percent(50),
+          marginTop: 15,
+          marginBottom: 15,
+        })
+      );
+
+      legend.data.setAll(pieSeries.dataItems);
+
       pieSeries.appear(1000, 100);
     } else if (chart === "line") {
       // line chart
@@ -189,13 +202,13 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
       );
 
       xAxis.children.push(
-            am5.Label.new(root, {
-              text: "Company Name",
-              fontSize: 14,
-              x: am5.p50,
-              centerX: am5.p50,
-              paddingTop: 10,
-            })
+        am5.Label.new(root, {
+          text: "Company Name",
+          fontSize: 14,
+          x: am5.p50,
+          centerX: am5.p50,
+          paddingTop: 10,
+        })
       );
 
       let yAxis = chart.yAxes.push(
@@ -205,14 +218,14 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
       );
 
       yAxis.children.unshift(
-            am5.Label.new(root, {
-              text: "Net Weight Sum",
-              fontSize: 14,
-              rotation: 90,
-              centerY: am5.p50,
-              paddingTop: 10,
-            })
-          );
+        am5.Label.new(root, {
+          text: "Net Weight Sum",
+          fontSize: 14,
+          rotation: 90,
+          centerY: am5.p50,
+          paddingTop: 10,
+        })
+      );
 
       let cursor = chart.set(
         "cursor",
@@ -275,7 +288,7 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
     };
   }, [graphdata, chart]);
 
-  return <div id="chartDiv" style={{ width: "50%", height: "350px" }}></div>;
+  return <div id="chartDiv" style={{ width: "60%", height: "350px" }}></div>;
 };
 
 export default ChildChart;
