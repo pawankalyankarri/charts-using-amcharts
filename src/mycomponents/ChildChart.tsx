@@ -32,9 +32,9 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
           panY: true,
           wheelX: "panX",
           wheelY: "zoomX",
-
           paddingLeft: 0,
           paddingRight: 1,
+          paddingBottom : 40,
         })
       );
 
@@ -91,7 +91,6 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
 
       let series = barChart.series.push(
         am5xy.ColumnSeries.new(root, {
-          name: "Net_tmt_Weight",
           xAxis,
           yAxis,
           valueYField: "netweight_tmt_sum",
@@ -127,20 +126,64 @@ const ChildChart = ({ graphdata, chart }: ChildChartProps) => {
       xAxis.data.setAll(graphdata);
       series.data.setAll(graphdata);
 
-      const legend = barChart.children.unshift(
-        am5.Legend.new(root, {
-          centerX: am5.percent(50),
-          x: am5.percent(50),
-          // centerY: am5.p50,
-          // y: am5.p100,
+      // const legend = barChart.children.unshift(
+      //   am5.Legend.new(root, {
+      //     centerX: am5.percent(50),
+      //     x: am5.percent(50),
+      //     // centerY: am5.p50,
+      //     // y: am5.p100,
 
+      //     layout: root.horizontalLayout,
+      //     paddingTop: 10,
+      //     visible: true,
+      //   })
+      // );
+
+      // legend.data.setAll(series.dataItems);
+      // console.log(series.data.values)
+      //legend.data.setAll(barChart.series.values)
+
+      // Custom legend container
+
+      // console.log(series.dataItems)
+
+      const legendContainer = barChart.children.unshift(
+        am5.Container.new(root, {
+          x: am5.p50,
+          centerX: am5.p50,
+          y: am5.percent(100), // bottom of chart container
+          centerY: am5.p0, // align properly
           layout: root.horizontalLayout,
-          paddingTop: 10,
-          visible: true,
         })
       );
-      
-      legend.data.setAll(series.dataItems);
+
+      // Loop over categories to create legend items
+      series.dataItems.forEach((dataItem, index) => {
+        const color = barChart.get("colors")!.getIndex(index);
+
+        const legendItem = legendContainer.children.push(
+          am5.Container.new(root, {
+            layout: root.horizontalLayout,
+            paddingRight: 10,
+          })
+        );
+
+        // Color box
+        legendItem.children.unshift(
+          am5.Rectangle.new(root, { width: 15, height: 15, fill: color })
+        );
+
+        // Category name label
+        legendItem.children.unshift(
+          am5.Label.new(root, {
+            text: dataItem.get("categoryX"),
+            fontSize: 12,
+            centerY: am5.p50,
+            paddingLeft: 5,
+            height : 20
+          })
+        );
+      });
 
       series.appear(1000);
       barChart.appear(1000, 100);

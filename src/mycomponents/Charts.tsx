@@ -82,7 +82,6 @@ const Charts = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Regions</SelectLabel>
-                {/* <SelectItem value="">Select Region</SelectItem> */}
                 <SelectItem value="SOUTH">South</SelectItem>
                 <SelectItem value="NORTH">North</SelectItem>
                 <SelectItem value="EAST">East</SelectItem>
@@ -106,7 +105,6 @@ const Charts = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Category</SelectLabel>
-                {/* <SelectItem value="">Select category</SelectItem> */}
                 <SelectItem value="R">R</SelectItem>
                 <SelectItem value="D">D</SelectItem>
                 <SelectItem value="O">O</SelectItem>
@@ -129,7 +127,6 @@ const Charts = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Districts </SelectLabel>
-                {/* <option value="">select distname</option> */}
                 <SelectItem value="SRI POTTI SRIRAMULU NELLORE">
                   SRI POTTI SRIRAMULU NELLORE
                 </SelectItem>
@@ -153,7 +150,6 @@ const Charts = () => {
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Charts </SelectLabel>
-                {/* <SelectItem value="">select chart</SelectItem> */}
                 <SelectItem value="pie">Pie chart</SelectItem>
                 <SelectItem value="bar">Bar chart</SelectItem>
                 <SelectItem value="line">Line chart</SelectItem>
